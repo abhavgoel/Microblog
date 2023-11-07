@@ -10,3 +10,21 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign in')
 
 class RegisterForm(FlaskForm):
+    username = StringField('username',validators=[DataRequired()])
+    email = StringField('email',validators=[DataRequired(),Email()])
+    password = PasswordField('password',validators=[DataRequired()])
+    password2 = PasswordField('Re-enter password',validators=[DataRequired(),EqualTo('password')])
+    submit = SubmitField('Register')
+
+    def validate_username(self,username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError("This username is already taken")
+    
+    def validate_email(self,email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError("This Email is already taken")
+
+
+
