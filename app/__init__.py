@@ -14,4 +14,8 @@ migrate = Migrate(app,db)
 
 login = LoginManager(app)
 
+login.login_view='login' #regsitering the login view, when users wouldnt be logged in, 
+#it would redirect then to this page so that we can use @login_required decorator
+
+
 from app import routes,models
