@@ -16,12 +16,12 @@ class RegisterForm(FlaskForm):
     password2 = PasswordField('Re-enter password',validators=[DataRequired(),EqualTo('password')])
     submit = SubmitField('Register')
 
-    def validate_username(self,username):
+    def validate_username(self,username): # check for duplicate user
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError("This username is already taken")
     
-    def validate_email(self,email):
+    def validate_email(self,email):#check for duplicate email
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("This Email is already taken")
